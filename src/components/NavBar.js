@@ -1,30 +1,30 @@
-import React, {useState} from 'react'
-import { Card, CardHeader, CardImg, CardBody, Navbar, NavbarBrand, NavbarToggler, Collapse ,Nav, NavItem, NavLink} from 'reactstrap'
-import Butao from './Button'
-export const Header = () =>{
-    const[isOpen, toggle] = useState(false)
+import React, { useState } from 'react'
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Button, Modal, ModalBody, ModalHeader } from 'reactstrap'
+export const Header = () => {
+    const [isOpen, toggle] = useState(false)
 
-    return(
+    return (
         <Navbar
-        color = "primary"
-        light
-        expand = "md"
+
+            color="success"
+            dark
+            expand="md"
         >
             <NavbarBrand>Site generico de musica</NavbarBrand>
-            <NavbarToggler onClick = {() => toggle(!isOpen)}/>
-            <Collapse isOpen = {isOpen} navbar>
-                <Nav className = "ml-2" navbar>
+            <NavbarToggler onClick={() => toggle(!isOpen)} />
+            <Collapse isOpen={isOpen} navbar>
+                <Nav className="ml-2" navbar>
                     <NavItem>
-                        <NavLink href = "">Login</NavLink>
+                        <LoginModal />
                     </NavItem>
                     <NavItem>
-                        <NavLink href = "">Cadastro</NavLink>
+                        <NavLink href="">Cadastro</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href = "">Discografia</NavLink>
+                        <NavLink href="">Discografia</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href = "">Artistas</NavLink>
+                        <NavLink href="">Artistas</NavLink>
                     </NavItem>
 
                 </Nav>
@@ -38,21 +38,37 @@ export const Header = () =>{
     )
 }
 
-export const Cartao = ({nome, data, banda, musicas, imagem}) =>{
-    return(
-        <Card style = {{width:"30vw", height:"auto"}}color = "secondary">
-            <CardHeader>{nome}</CardHeader>
-            <CardImg src = {imagem}/>
-            <CardBody><p>{banda}</p>
-            <p>{musicas}</p>
-            <p>{data}</p>
-            <Butao/>
-            </CardBody>
+const LoginModal = () => {
+    const [modal, setModal] = useState(false)
+
+    const openModal = () => [
+        setModal(!modal)
+    ]
+
+    return (
+        <div>
+            <NavLink
+                onClick={openModal}
+                color="success"
+                href="#"
+            >Login</NavLink>
+            <Modal
+                toggle={openModal}
+                isOpen={modal}
+            >
+                <ModalHeader toggle={openModal}>Login</ModalHeader>
+                <ModalBody>
+                    Aliquip cillum dolore quis non anim. Culpa qui sunt deserunt laboris dolor ex qui minim duis mollit duis nostrud amet. Consequat adipisicing labore in quis amet nulla adipisicing sunt est incididunt magna duis culpa. Ut quis nisi incididunt nisi tempor eiusmod sit occaecat elit commodo minim magna. Commodo voluptate mollit minim Lorem adipisicing dolor aliquip magna nulla irure Lorem laboris sit exercitation. Officia irure sunt sint ex quis commodo. Aute eu dolor anim consectetur non consequat fugiat amet exercitation non magna.
+                </ModalBody>
+
+            </Modal>
+
+        </div>
 
 
-        </Card>
     )
 }
+
 
 
 
