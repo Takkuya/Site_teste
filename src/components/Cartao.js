@@ -1,24 +1,24 @@
 import React from "react"
 import { Card, CardHeader, CardImg, CardBody } from "reactstrap"
-import { Butao, Butao2 } from "./Button"
+import { Butao } from "./Button"
+import Modal from "./Modal"
+import Texto from "./Texto"
 
 export const Cartao = ({ nome, data, banda, musicas, imagem }) => {
 	return (
-		<Card style={{ width: "auto", height: "auto" }} color='secondary'>
+		<Card style={{ width: "auto", height: "100%" }} color='secondary'>
 			<CardHeader>{nome}</CardHeader>
 			<CardImg
 				src={imagem}
 				style={{
-					width: "18em",
-					height: "18em",
+					width: "100%",
+					height: "auto",
 				}}
 			/>
 			<CardBody>
-				<p>{banda}</p>
-				<p>{musicas}</p>
-				<p>{data}</p>
+				<Texto content={banda} variant='p' color='black' />
 				<Butao />
-				<Butao2 />
+				<Modal {...{ nome, data, banda, musicas, imagem }} />
 			</CardBody>
 		</Card>
 	)
