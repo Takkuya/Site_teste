@@ -1,0 +1,1 @@
+export const POST_ALBUM = "POST_ALBUM"

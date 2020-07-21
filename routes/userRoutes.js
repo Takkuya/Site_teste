@@ -1,59 +1,51 @@
-const users = require("../database");
-
 const router = require("express").Router();
+const User = require("../models/User");
 
-router.get("/", (req, res) => {
-  return res.send(users);
-});
+router.get("/:_id", (req, res) => {
+  const _id = req.params._id;
 
-router.get("/:id", (req, res) => {
-  console.log(req.params.id);
-  const resUser = users.filter((user) => user.id === req.params.id);
-
-  return res.send(resUser);
+  User.findOne({_id}, (err, doc) => {
+    if (err) throw (err);
+    return res.json(doc);
+  });
 });
 
 router.post("/cadastro", (req, res) => {
-  const { nome, idade } = req.body;
+  const {nome, email, senha} = req.body;
 
-  const lastUserId = parseInt(users[users.length - 1].id);
-  const newId = lastUserId + 1;
+  if (!nome || !email || !senha) {
+    return res.status(400).send("Preencha todos campos")
+  }
 
-  const newUser = {
-    id: newId.toString(),
-    nome,
-    idade,
-  };
+ const newUser = new User ({
+   nome,
+   email,
+   senha,
+ });
 
-  users.push(newUser);
-  return res.send(newUser);
+ newUser.save().then((user) => {
+   return res.json(user)
+ });
+
 });
 
-router.post("/cadastroVarios", (req, res) => {
-  const usuarios = req.body;
+router.delete("/:_id", (req, res) =>{
+  const _id = req.params._id;
 
-  //achar o ultimo id(ultimoUsuario)
+  User.deleteOne({_id},(err, doc) => {
+    if (err) throw (err);
+    return res.json(doc);
+  })
+})
 
-  // map, do array usuarios
-  //colocar num array novo, mas com os ids
+router.put("/:_id",(req, res)=>{
+  const _id = req.params._id
+  const {body} = req
 
-  const lastUserId = parseInt(users[users.length - 1].id);
-  const newId = lastUserId + 1;
-
-  const newUsers = [];
-
-  usuarios.map((usuario, index) =>
-    newUsers.push({
-      id: (newId + index).toString(),
-      nome: usuario.nome,
-      idade: usuario.idade,
-    })
-  );
-
-  users.push(...newUsers);
-  return res.send(newUsers);
-});
+  User.updateOne({_id},body,(err,doc)=>{
+    if (err) throw (err);
+    return res.json(doc);
+  })
+})
 
 module.exports = router;
-
-//array.map( itemDoArray => fazeroqvcQuer)
